@@ -5,3 +5,15 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+require 'dbf'
+
+widgets = DBF::Table.new("data/api11bdb.dbf")
+
+
+widgets.each do |record|
+  unless County.find_by_name(record['CNAME'])
+    puts "Creating county: #{record['CNAME']}"
+    County.create(name: record['CNAME'])
+  end
+end
