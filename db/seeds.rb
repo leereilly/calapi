@@ -10,10 +10,29 @@ require 'dbf'
 
 widgets = DBF::Table.new("data/api11bdb.dbf")
 
+County.delete_all
+District.delete_all
+School.delete_all
 
 widgets.each do |record|
-  unless County.find_by_name(record['CNAME'])
-    puts "Creating county: #{record['CNAME']}"
-    County.create(name: record['CNAME'])
+  county    = record['CNAME']
+  district  = record['DNAME']
+
+  # Counties
+  unless County.find_by_name county
+    puts "Creating county: #{county}"
+    County.create(name: county)
+  end
+
+  # Districts
+  unless District.find_by_name district
+    puts "Creating district: #{district}"
+    District.create(county_id: County.find_by_name(county).id, name: record['DNAME'])
+  end
+
+  # School
+  unless School.find_by_name district
+    puts "Creating district: #{district}"
+    District.create(county_id: County.find_by_name(county).id, name: record['DNAME'])
   end
 end
