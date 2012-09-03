@@ -1,4 +1,6 @@
 California::Application.routes.draw do
+  resources :schools
+
   resources :districts
 
   resources :counties

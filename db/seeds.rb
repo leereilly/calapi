@@ -17,6 +17,7 @@ School.delete_all
 widgets.each do |record|
   county    = record['CNAME']
   district  = record['DNAME']
+  school    = record['SNAME']
 
   # Counties
   unless County.find_by_name county
@@ -31,8 +32,8 @@ widgets.each do |record|
   end
 
   # School
-  unless School.find_by_name district
-    puts "Creating district: #{district}"
-    District.create(county_id: County.find_by_name(county).id, name: record['DNAME'])
+  unless School.find_by_name school
+    puts "Creating school: #{school}"
+    School.create(district_id: District.find_by_name(district).id, name: record['SNAME'])
   end
 end
